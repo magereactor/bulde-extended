@@ -10,6 +10,10 @@ Magento 2 module that provides Budle of Configurable Products
 composer require magereactor/bundle-extended
 ```
 
+### Compatiblity
+Currently this module is compatible with Magento 2.4.x
+
+
 ### Enable Module
 
 ```php
