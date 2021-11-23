@@ -1,0 +1,52 @@
+<?php
+/**
+ * @var \MageReactor\BundleExtended\Block\Product\Bundle\Configurable $block
+ */
+$option = $block->getOption();
+$attributes = $block->decorateArray($block->getAllowAttributes());
+$product = $block->getProduct();
+?>
+
+<?php if ($product->isSaleable() && count($attributes)): ?>
+
+<div class="bundle-configurable fieldset<?php if (!$product->getIsDefault()) : ?> no-display<?php endif;?>"
+     id="options-<?php echo (int)$product->getSelectionId()?>">
+
+    <input type="hidden" name="selection_configurable_option[<?= (int)$product->getSelectionId() ?>]" value="" />
+
+    <?php foreach ($attributes as $attribute): ?>
+        <div class="field configurable required">
+            <label class="label"
+                   for="attribute<?=  $attribute->getAttributeId() ?>-<?= $product->getSelectionId() ?>">
+                <span><?= $block->escapeHtml($attribute->getProductAttribute()->getStoreLabel()) ?></span>
+            </label>
+            <div class="control">
+                <select
+                        data-selection-id="<?php echo $product->getSelectionId(); ?>"
+                        data-attribute-id="<?php echo $attribute->getAttributeId();?>"
+                        name="bundle_super_attribute[<?= $product->getSelectionId() ?>][<?= $attribute->getAttributeId() ?>]"
+                        data-rule-required="true"
+                        id="attribute<?= $attribute->getAttributeId() ?>-<?= $product->getSelectionId() ?>"
+                        class="super-attribute-select">
+                    <option value=""><?= __('Choose an Option...') ?></option>
+                </select>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
+
+<script type="text/x-magento-init">
+{
+    "#options-<?php echo (int)$product->getSelectionId()?>": {
+        "configOptions": {
+            "configurations": <?php /* @escapeNotVerified */ echo $block->getJsonConfig() ?>,
+            "bundleOption": ".bundle-option-select",
+            "optionsFieldset": "#options-<?php /* @escapeNotVerified */ echo (int)$product->getSelectionId() ?>",
+            "selectionId": "<?php echo $product->getSelectionId(); ?>",
+            "optionId": "<?php echo $option->getId();?>",
+            "mainSelector": "#bundle-option-<?php echo $option->getId(); ?>"
+        }
+    }
+}
+</script>
+<?php endif; ?>

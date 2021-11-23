@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Bundle\Model\ResourceModel\Indexer\Stock"
+                type="MageReactor\BundleExtended\Model\ResourceModel\Indexer\Stock"/>
+
+    <preference for="MageReactor\BundleExtended\Api\StockManagementInterface"
+                    type="MageReactor\BundleExtended\Model\StockManagement"/>
+
+    <type name="MageReactor\BundleExtended\Model\Product">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="non_composite_product_types" xsi:type="array">
+                    <item name="configurable" xsi:type="string">configurable</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="MageReactor\BundleExtended\Model\ProductFactory" type="Magento\Catalog\Model\ProductFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">MageReactor\BundleExtended\Model\Product</argument>
+        </arguments>
+    </virtualType>
+
+    <preference for="MageReactor\BundleExtended\Api\OptionsManagementInterface"
+                    type="MageReactor\BundleExtended\Model\OptionsManagement"/>
+
+
+    <virtualType name="bundleExtended" type="Magento\Catalog\Model\ProductRepository">
+        <arguments>
+            <argument name="productFactory" xsi:type="object">MageReactor\BundleExtended\Model\ProductFactory</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Bundle\Model\LinkManagement">
+        <arguments>
+            <argument name="productRepository" xsi:type="object">bundleExtended</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Bundle\Model\ResourceModel\Selection\CollectionFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">MageReactor\BundleExtended\Model\ResourceModel\Selection\Collection</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\CatalogInventory\Helper\Stock">
+        <plugin name="MageReactor_BundleExtended::stockModification"
+                type="MageReactor\BundleExtended\Plugin\StockModification"
+                sortOrder="100" />
+    </type>
+
+    <preference for="Magento\Bundle\Block\DataProviders\OptionPriceRenderer"
+                type="MageReactor\BundleExtended\Block\DataProviders\OptionPriceRenderer"/>
+
+
+    <type name="Magento\Bundle\Model\ResourceModel\Option\Collection">
+        <plugin name="MageReactor_BundleExtended::changeAppendSelection"
+                type="MageReactor\BundleExtended\Plugin\ChangeAppendSelections"/>
+    </type>
+
+    <type name="Magento\CatalogInventory\Model\Quote\Item\QuantityValidator">
+        <arguments>
+            <argument name="optionInitializer" xsi:type="object">MageReactor\BundleExtended\Model\Quote\Item\QuantityValidator\Initializer\Option</argument>
+        </arguments>
+    </type>
+</config>

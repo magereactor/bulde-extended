@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Bundle\Ui\DataProvider\Product\Form\Modifier\Composite">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="configPanel" xsi:type="string">MageReactor\BundleExtended\Ui\DataProvider\Product\Form\Modifier\ConfigPanel</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="Magento\Bundle\Model\LinkManagement"
+                type="MageReactor\BundleExtended\Model\LinkManagement"/>
+
+    <type name="MageReactor\BundleExtended\Model\LinkManagement">
+        <plugin name="MageReactor_BundleExtended::link_management" type="MageReactor\BundleExtended\Plugin\LinkManagementPlugin"/>
+    </type>
+
+    <virtualType name="MageReactor\BundleExtended\Model\ResourceModel\Product\CollectionFactory"
+                 type="Magento\Catalog\Model\ResourceModel\Product\CollectionFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">MageReactor\BundleExtended\Model\ResourceModel\Product\Collection</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Bundle\Ui\DataProvider\Product\BundleDataProvider">
+        <arguments>
+            <argument name="collectionFactory" xsi:type="object">MageReactor\BundleExtended\Model\ResourceModel\Product\CollectionFactory</argument>
+        </arguments>
+    </type>
+</config>

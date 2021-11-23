@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="product.info.bundle.options.select"
+                        template="MageReactor_BundleExtended::catalog/product/view/type/bundle/option/select.phtml">
+            <arguments>
+                <argument name="view_model" xsi:type="object">MageReactor\BundleExtended\ViewModel\OptionsViewModel</argument>
+            </arguments>
+
+            <block class="MageReactor\BundleExtended\Block\Product\Bundle\Configurable"
+                   name="bundle.configs"
+                   template="MageReactor_BundleExtended::catalog/product/view/type/bundle/option/configurable.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

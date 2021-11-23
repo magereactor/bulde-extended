@@ -1,0 +1,32 @@
+{
+    "name": "magereactor/bundle-extended",
+    "description": "MageReactor BundleExtended",
+    "type": "magento2-module",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "MageReactor",
+            "homepage": "https://www.magereactor.com"
+        }
+    ],
+    "require": {
+        "php": "~7.3.*||~7.4.*"
+    },
+    "keywords": [
+        "magereactor",
+        "magereactor magento 2",
+        "MageReactor Bundle Extended",
+        "MageReactor Bundle",
+        "MageReactor Configurable Bundle"
+    ],
+
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "MageReactor\\BundleExtended\\": ""
+        }
+    }
+}
